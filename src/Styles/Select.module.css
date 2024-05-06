@@ -1,0 +1,44 @@
+.select-container {
+  max-width: 16rem;
+  height: 2.7rem;
+  border: 2px solid rgba(145, 145, 145, 0.619);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+.selected {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+.options-hide {
+  height: 0px;
+  overflow: hidden;
+  transition: all 200ms;
+}
+.options {
+  height: 10rem;
+  overflow: auto;
+  background-color: rgb(222, 222, 222);
+  transition: all 200ms;
+}
+.options li,
+.options-hide li {
+  padding: 6px;
+  font-weight: 500;
+}
+.options li:hover {
+  background-color: rgb(206, 206, 206);
+}
+.place-holder {
+  color: gray;
+  font-weight: 500;
+}
+.no-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

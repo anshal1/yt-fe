@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllVideo } from "../Services/video.service";
 import VideoCard from "../Components/VideoCard";
+import Select from "../Components/Select";
 
 const Home = () => {
   const [Video, setVideo] = useState([]);
@@ -18,6 +19,7 @@ const Home = () => {
           return <VideoCard video={video} key={video?._id} />;
         })}
       </main>
+      <Select options={[{ label: "Option1", value: "option 1" }]} />
     </section>
   );
 };
