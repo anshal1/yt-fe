@@ -24,6 +24,7 @@ module.exports = {
     "react/jsx-no-target-blank": 0,
     "react/react-in-jsx-scope": 0,
     "no-unused-vars": "error",
+    "react/prop-types": 0,
   },
   settings: {
     react: {

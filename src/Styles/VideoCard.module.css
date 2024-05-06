@@ -1,0 +1,24 @@
+.vid-card {
+  --bottom-size: 2rem;
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+}
+
+.details-container {
+  padding: 0px 12px;
+}
+
+.vid-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
