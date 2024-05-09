@@ -13,4 +13,16 @@ const getAllVideo = CatchErr(async ({ page, limit }) => {
   return res;
 });
 
-export { getAllVideo };
+const getSingleVideo = CatchErr(async (slug) => {
+  const url = `${BASEURL}/video/${slug}`;
+  const data = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await data.json();
+  return res;
+});
+
+export { getAllVideo, getSingleVideo };

@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "../Styles/Select.module.css";
-const Select = ({ options, onChange, value }) => {
+const Select = ({ options = [], onChange, value = "", placeholder }) => {
   const [ShowOptions, setShowOptions] = useState(false);
   const [SelectedOption, setSelecteOption] = useState(value || "");
+  useEffect(() => {
+    const selectedOption = options?.find((option) => {
+      return option?.value === value;
+    });
+    setSelecteOption(selectedOption);
+  }, [value]);
   return (
     <div className={style["select-container"]}>
       <div
@@ -12,8 +18,10 @@ const Select = ({ options, onChange, value }) => {
         }}
       >
         <p className={style["selected-option"]}>
-          {SelectedOption || (
-            <span className={style["place-holder"]}>Please Select</span>
+          {SelectedOption?.label || (
+            <span className={style["place-holder"]}>
+              {placeholder || "Please Select"}
+            </span>
           )}{" "}
         </p>
       </div>
@@ -26,10 +34,18 @@ const Select = ({ options, onChange, value }) => {
               return (
                 <li
                   onClick={() => {
-                    setSelecteOption(option?.value);
+                    setSelecteOption(option);
                     onChange(option?.value);
+                    setShowOptions(false);
                   }}
                   key={option?.label}
+                  className={
+                    style[
+                      SelectedOption?.value === option?.value
+                        ? "selected-options"
+                        : ""
+                    ]
+                  }
                 >
                   {option?.label}
                 </li>

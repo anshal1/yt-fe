@@ -1,10 +1,17 @@
 import React from "react";
 import style from "../Styles/VideoCard.module.css";
 import { FormatDate } from "../utils/FormatDate";
+import { useNavigate } from "react-router-dom";
 
 const VideoCard = ({ video }) => {
+  const navigate = useNavigate();
   return (
-    <div className={style["vid-card"]}>
+    <div
+      className={style["vid-card"]}
+      onClick={() => {
+        navigate(`/video/${video?.slug}`);
+      }}
+    >
       <video
         src={video?.video?.["640x360"]}
         className="video-thumbnail"

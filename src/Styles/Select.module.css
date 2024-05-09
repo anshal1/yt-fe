@@ -5,6 +5,7 @@
   border-radius: 4px;
   cursor: pointer;
   position: relative;
+  z-index: 1000000;
 }
 .selected {
   width: 100%;
@@ -19,18 +20,19 @@
   transition: all 200ms;
 }
 .options {
-  height: 10rem;
+  max-height: 10rem;
   overflow: auto;
-  background-color: rgb(222, 222, 222);
+  background-color: rgb(100, 100, 100);
   transition: all 200ms;
 }
 .options li,
 .options-hide li {
   padding: 6px;
   font-weight: 500;
+  color: white;
 }
 .options li:hover {
-  background-color: rgb(206, 206, 206);
+  background-color: rgb(84, 84, 84);
 }
 .place-holder {
   color: gray;
@@ -41,4 +43,12 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.selected-options {
+  background-color: rgb(61, 61, 61);
+}
+
+.selected-option {
+  font-weight: 500;
 }
