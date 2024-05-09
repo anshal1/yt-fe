@@ -38,3 +38,9 @@
   cursor: pointer;
   display: block;
 }
+.views > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 6px;
+}

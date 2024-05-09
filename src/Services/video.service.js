@@ -25,4 +25,16 @@ const getSingleVideo = CatchErr(async (slug) => {
   return res;
 });
 
-export { getAllVideo, getSingleVideo };
+const UpdateViews = CatchErr(async (id) => {
+  const url = `${BASEURL}/video/${id}`;
+  const data = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await data.json();
+  return res;
+});
+
+export { getAllVideo, getSingleVideo, UpdateViews };

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getSingleVideo } from "../Services/video.service";
+import { UpdateViews, getSingleVideo } from "../Services/video.service";
 import { useParams } from "react-router-dom";
 import Select from "../Components/Select";
 import { options } from "../utils/Constant";
@@ -8,6 +8,7 @@ import style from "../Styles/VideoPlayer.module.css";
 import {
   FaCompress,
   FaExpand,
+  FaEye,
   FaPause,
   FaPlay,
   FaVolumeHigh,
@@ -38,9 +39,35 @@ const VideoPlayer = () => {
   };
 
   useEffect(() => {
-    const updateProgress = () => {
+    const recentlyWatched = () => {
+      return new Promise((resolve) => {
+        const storageData = localStorage.getItem("watched");
+        if (!storageData) resolve(true);
+        const parsed = JSON.parse(storageData);
+        if (parsed?.video === Video?._id) resolve(false);
+      });
+    };
+    const updateViews = async () => {
+      if (!Video?._id) return;
+      const hasWatched = await recentlyWatched();
+      if (!hasWatched) {
+        return;
+      }
+      const newUpdatedVid = await UpdateViews(Video?._id);
+      localStorage.setItem(
+        "watched",
+        JSON.stringify({ timestamp: new Date(), video: Video?._id })
+      );
+      setVideo(newUpdatedVid);
+    };
+    const updateProgress = async () => {
       setvidCurrentTime(vidRef?.current?.currentTime);
       setvidDuration(vidRef?.current?.duration);
+      const passedTimeInPercent =
+        (vidRef?.current?.currentTime / vidRef?.current?.duration) * 100;
+      if (passedTimeInPercent >= 25) {
+        updateViews();
+      }
     };
     const interval = setInterval(updateProgress, 500);
 
@@ -50,7 +77,7 @@ const VideoPlayer = () => {
       clearInterval(interval);
       vidRef?.current?.removeEventListener("timeupdate", updateProgress);
     };
-  }, []);
+  }, [Video]);
 
   const handleSeek = (e) => {
     vidRef.current.currentTime = e.target.value;
@@ -64,6 +91,10 @@ const VideoPlayer = () => {
       setVideo(video?.video);
     })();
   }, []);
+
+  window.onload = () => {
+    localStorage.removeItem("watched");
+  };
 
   return (
     <>
@@ -85,7 +116,10 @@ const VideoPlayer = () => {
         {!isFullScreen && (
           <div className={style["details"]}>
             <div className={style["views"]}>
-              <p>{Video?.views} </p>
+              <p>
+                {Video?.views}{" "}
+                <FaEye style={{ width: "24px", height: "24px" }} />{" "}
+              </p>
             </div>
           </div>
         )}

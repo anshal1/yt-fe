@@ -6,6 +6,7 @@ import Select from "../Components/Select";
 const Home = () => {
   const [Video, setVideo] = useState([]);
   useEffect(() => {
+    localStorage.removeItem("watched");
     (async () => {
       const data = await getAllVideo({ page: 1, limit: 10 });
       setVideo(data?.videos);
