@@ -1,6 +1,10 @@
 .vid-player-container {
   position: relative;
-  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
 }
 .buttons {
   width: 100%;
@@ -21,5 +25,16 @@
 }
 .action-btn {
   display: flex;
-  column-gap: 3px;
+  column-gap: 6px;
+}
+.title {
+  margin-bottom: 12px;
+}
+.video {
+  display: block;
+}
+.buttons button {
+  all: unset;
+  cursor: pointer;
+  display: block;
 }

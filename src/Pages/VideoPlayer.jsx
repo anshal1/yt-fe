@@ -5,6 +5,15 @@ import Select from "../Components/Select";
 import { options } from "../utils/Constant";
 import style from "../Styles/VideoPlayer.module.css";
 
+import {
+  FaCompress,
+  FaExpand,
+  FaPause,
+  FaPlay,
+  FaVolumeHigh,
+  FaVolumeXmark,
+} from "react-icons/fa6";
+
 const VideoPlayer = () => {
   const { slug } = useParams();
   const [Video, setVideo] = useState({});
@@ -13,36 +22,18 @@ const VideoPlayer = () => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [vidDuration, setvidDuration] = useState(0);
   const [vidCurrentTIme, setvidCurrentTime] = useState(0);
+  const [Width, setWidth] = useState(800);
+  const [Height, setHeight] = useState(450);
 
   const toggleFullScreen = () => {
     if (!isFullScreen) {
-      if (vidRef.current.requestFullscreen) {
-        vidRef.current.requestFullscreen();
-      } else if (vidRef.current.mozRequestFullScreen) {
-        // Firefox
-        vidRef.current.mozRequestFullScreen();
-      } else if (vidRef.current.webkitRequestFullscreen) {
-        // Chrome, Safari and Opera
-        vidRef.current.webkitRequestFullscreen();
-      } else if (vidRef.current.msRequestFullscreen) {
-        // IE/Edge
-        vidRef.current.msRequestFullscreen();
-      }
       setIsFullScreen(true);
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        // Firefox
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        // Chrome, Safari and Opera
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        // IE/Edge
-        document.msExitFullscreen();
-      }
       setIsFullScreen(false);
+      setWidth(800);
+      setHeight(450);
     }
   };
 
@@ -75,54 +66,88 @@ const VideoPlayer = () => {
   }, []);
 
   return (
-    <div className={style["vid-player-container"]}>
-      <video src={Video?.video?.[Quality]} width={800} ref={vidRef}></video>
-      <div className={style["buttons"]}>
-        <div className={style["action-btn"]}>
-          <button
-            onClick={() => {
-              if (vidRef?.current?.paused) {
-                vidRef?.current?.play();
-                setisPlaying(true);
-              } else {
-                vidRef?.current?.pause();
-                setisPlaying(false);
-              }
-            }}
-          >
-            {!isPlaying ? "Play" : "Pause"}
-          </button>
-          <button onClick={toggleFullScreen}>
-            {isFullScreen ? "Exit Full Screen" : "Full Screen"}
-          </button>
-          <button
-            onClick={() => {
-              vidRef.current.muted = !vidRef?.current?.muted;
-            }}
-          >
-            {vidRef?.current?.muted ? "Unmute" : "Mute"}
-            {/* Mute */}
-          </button>
-        </div>
-        <input
-          type="range"
-          min={0}
-          max={vidDuration}
-          value={vidCurrentTIme}
-          onChange={handleSeek}
-          className={style["vid-progress"]}
-        />
+    <>
+      <div className={style["vid-player-container"]}>
+        {!isFullScreen && (
+          <div className={style["details"]}>
+            <div className={style["title"]}>
+              <h2>{Video?.title}</h2>
+            </div>
+          </div>
+        )}
+        <video
+          src={Video?.video?.[Quality]}
+          width={Width}
+          height={Height}
+          ref={vidRef}
+          className={style["video"]}
+        ></video>
+        {!isFullScreen && (
+          <div className={style["details"]}>
+            <div className={style["views"]}>
+              <p>{Video?.views} </p>
+            </div>
+          </div>
+        )}
+        <div className={style["buttons"]}>
+          <div className={style["action-btn"]}>
+            <button
+              onClick={() => {
+                if (vidRef?.current?.paused) {
+                  vidRef?.current?.play();
+                  setisPlaying(true);
+                } else {
+                  vidRef?.current?.pause();
+                  setisPlaying(false);
+                }
+              }}
+            >
+              {!isPlaying ? (
+                <FaPlay style={{ width: "24px", height: "24px" }} />
+              ) : (
+                <FaPause style={{ width: "24px", height: "24px" }} />
+              )}
+            </button>
+            <button onClick={toggleFullScreen}>
+              {isFullScreen ? (
+                <FaCompress style={{ width: "24px", height: "24px" }} />
+              ) : (
+                <FaExpand style={{ width: "24px", height: "24px" }} />
+              )}
+            </button>
+            <button
+              onClick={() => {
+                vidRef.current.muted = !vidRef?.current?.muted;
+              }}
+            >
+              {vidRef?.current?.muted ? (
+                <FaVolumeXmark style={{ width: "24px", height: "24px" }} />
+              ) : (
+                <FaVolumeHigh style={{ width: "24px", height: "24px" }} />
+              )}
+              {/* Mute */}
+            </button>
+          </div>
+          <input
+            type="range"
+            min={0}
+            max={vidDuration}
+            value={vidCurrentTIme}
+            onChange={handleSeek}
+            className={style["vid-progress"]}
+          />
 
-        <Select
-          value={Quality}
-          options={options}
-          onChange={(val) => {
-            setQuality(val);
-          }}
-          placeholder={"Quality"}
-        />
+          <Select
+            value={Quality}
+            options={options}
+            onChange={(val) => {
+              setQuality(val);
+            }}
+            placeholder={"Quality"}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
