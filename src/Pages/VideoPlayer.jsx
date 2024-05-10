@@ -103,7 +103,7 @@ const VideoPlayer = () => {
         {!isFullScreen && (
           <div className={style["details"]}>
             <div className={style["title"]}>
-              <h2>{Video?.title}</h2>
+              <p>{Video?.title}</p>
             </div>
           </div>
         )}

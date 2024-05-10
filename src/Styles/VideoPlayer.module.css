@@ -30,6 +30,10 @@
 .title {
   margin-bottom: 12px;
 }
+.title > p {
+  font-size: 18px;
+  font-family: 500;
+}
 .video {
   display: block;
 }
