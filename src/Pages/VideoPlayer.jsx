@@ -170,15 +170,16 @@ const VideoPlayer = () => {
             onChange={handleSeek}
             className={style["vid-progress"]}
           />
-
-          <Select
-            value={Quality}
-            options={options}
-            onChange={(val) => {
-              setQuality(val);
-            }}
-            placeholder={"Quality"}
-          />
+          <div style={{ width: "5rem" }}>
+            <Select
+              value={Quality}
+              options={options}
+              onChange={(val) => {
+                setQuality(val);
+              }}
+              placeholder={"Quality"}
+            />
+          </div>
         </div>
       </div>
     </>
