@@ -33,6 +33,7 @@
   padding: 6px;
   font-weight: 500;
   color: white;
+  width: fit-content;
 }
 .options li:hover {
   background-color: rgb(84, 84, 84);

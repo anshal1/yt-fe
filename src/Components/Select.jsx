@@ -14,12 +14,11 @@ const Select = ({ options = [], onChange, value = "", placeholder }) => {
     setSelecteOption(selectedOption);
   }, [value]);
   useEffect(() => {
-    const heigthOfOption = 10 * 16;
-    const selectHeight = container?.current?.offsetTop + heigthOfOption;
+    const rect = container.current.getBoundingClientRect();
+    const selectHeight = rect?.y + rect?.height;
 
-    const diff = Math.abs(selectHeight - window.innerHeight);
-    console.log(diff);
-    if (diff <= 100) {
+    const diff = Math.abs(window.innerHeight - selectHeight);
+    if (diff <= 350) {
       setStyle({ bottom: "41px" });
     } else {
       setStyle({

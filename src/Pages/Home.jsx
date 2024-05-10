@@ -26,7 +26,7 @@ const Home = () => {
           return <VideoCard video={video} key={video?._id} />;
         })}
       </main>
-      <div style={{ marginTop: "5rem" }}>
+      <div style={{ marginTop: "15rem" }}>
         <Select options={options} onChange={() => {}} />
       </div>
     </section>
