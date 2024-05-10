@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllVideo } from "../Services/video.service";
 import VideoCard from "../Components/VideoCard";
-import Select from "../Components/Select";
+import style from "../Styles/Home.module.css";
 
 const Home = () => {
   const [Video, setVideo] = useState([]);
@@ -13,22 +13,13 @@ const Home = () => {
     })();
   }, []);
 
-  const options = [
-    { label: "Option1", value: "option 1" },
-    { label: "Option2", value: "option 2" },
-    { label: "Option3", value: "option 3" },
-  ];
-
   return (
     <section>
-      <main>
+      <main className={style["main"]}>
         {Video?.map((video) => {
           return <VideoCard video={video} key={video?._id} />;
         })}
       </main>
-      <div style={{ marginTop: "15rem" }}>
-        <Select options={options} onChange={() => {}} />
-      </div>
     </section>
   );
 };

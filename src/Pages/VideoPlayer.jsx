@@ -14,6 +14,7 @@ import {
   FaVolumeHigh,
   FaVolumeXmark,
 } from "react-icons/fa6";
+import { FormatNumber } from "../utils/FormatDate";
 
 const VideoPlayer = () => {
   const { slug } = useParams();
@@ -117,7 +118,7 @@ const VideoPlayer = () => {
           <div className={style["details"]}>
             <div className={style["views"]}>
               <p>
-                {Video?.views}{" "}
+                {FormatNumber(Video?.views)}{" "}
                 <FaEye style={{ width: "24px", height: "24px" }} />{" "}
               </p>
             </div>

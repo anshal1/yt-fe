@@ -3,22 +3,30 @@
   position: relative;
   width: fit-content;
   height: fit-content;
-}
-
-.details-container {
-  padding: 0px 12px;
+  background-color: rgba(128, 128, 128, 0.11);
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: 26rem;
+  height: 20rem;
 }
 
 .vid-title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
+  word-wrap: break-word;
 }
 
 .user-details {
   display: flex;
   align-items: center;
   column-gap: 12px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
+}
+.video-thumbnail {
+  display: block;
+  width: 100%;
 }

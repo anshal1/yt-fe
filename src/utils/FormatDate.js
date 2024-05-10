@@ -11,3 +11,10 @@ export function FormatDate(date, config) {
   const format = new Intl.DateTimeFormat("en-In", options);
   return format.format(toDate);
 }
+
+export function FormatNumber(number = 0) {
+  const formatedNumber = new Intl.NumberFormat("en-IN", {
+    maximumSignificantDigits: 3,
+  }).format(number);
+  return formatedNumber;
+}
