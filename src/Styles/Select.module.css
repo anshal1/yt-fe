@@ -20,6 +20,9 @@
   transition: all 200ms;
 }
 .options {
+  width: 100%;
+  position: absolute;
+  z-index: 1000000;
   max-height: 10rem;
   overflow: auto;
   background-color: rgb(100, 100, 100);

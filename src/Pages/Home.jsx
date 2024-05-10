@@ -13,6 +13,12 @@ const Home = () => {
     })();
   }, []);
 
+  const options = [
+    { label: "Option1", value: "option 1" },
+    { label: "Option2", value: "option 2" },
+    { label: "Option3", value: "option 3" },
+  ];
+
   return (
     <section>
       <main>
@@ -20,7 +26,9 @@ const Home = () => {
           return <VideoCard video={video} key={video?._id} />;
         })}
       </main>
-      <Select options={[{ label: "Option1", value: "option 1" }]} />
+      <div style={{ marginTop: "5rem" }}>
+        <Select options={options} onChange={() => {}} />
+      </div>
     </section>
   );
 };
