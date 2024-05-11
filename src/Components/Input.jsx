@@ -1,6 +1,13 @@
 import React from "react";
 import style from "../Styles/Input.module.css";
-const Input = ({ type, placeholder, onChange, disabled = false, value }) => {
+const Input = ({
+  type,
+  placeholder,
+  onChange,
+  disabled = false,
+  value,
+  ...rest
+}) => {
   return (
     <input
       type={type || "text"}
@@ -11,6 +18,7 @@ const Input = ({ type, placeholder, onChange, disabled = false, value }) => {
       value={value}
       disabled={disabled}
       className={style["input"]}
+      {...rest}
     />
   );
 };
