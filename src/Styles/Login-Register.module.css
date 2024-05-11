@@ -1,0 +1,12 @@
+.page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.input-wrapper {
+  width: 20rem;
+  margin: 12px 0px;
+}
