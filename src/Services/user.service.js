@@ -13,5 +13,17 @@ const UserLogin = CatchErr(async (body) => {
   const res = await data.json();
   return res;
 });
+const UserRegister = CatchErr(async (body) => {
+  const url = `${BASEURL}/user`;
+  const data = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  const res = await data.json();
+  return res;
+});
 
-export { UserLogin };
+export { UserLogin, UserRegister };
