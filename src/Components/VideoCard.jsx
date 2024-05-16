@@ -9,8 +9,18 @@ const VideoCard = ({ video }) => {
   const videoRef = useRef();
   const [Duration, setDuration] = useState(0); // mins
   useEffect(() => {
-    setDuration(Number(videoRef?.current?.duration / 60).toFixed(2));
-  }, [videoRef]);
+    if (!video?.video?.["640x360"]) return;
+    const handleSetDuration = (e) => {
+      setDuration(Number(e.target.duration / 60).toFixed(2));
+    };
+    videoRef?.current?.addEventListener("loadedmetadata", handleSetDuration);
+    return () => {
+      videoRef?.current?.removeEventListener(
+        "loadedmetadata",
+        handleSetDuration
+      );
+    };
+  }, [videoRef, video]);
   return (
     <div
       className={style["vid-card"]}

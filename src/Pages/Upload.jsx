@@ -47,6 +47,12 @@ const Upload = () => {
   };
 
   const handlePreview = CatchErr((file) => {
+    setVideoData((prev) => {
+      return {
+        ...prev,
+        title: file?.name,
+      };
+    });
     const reader = new FileReader();
     reader.addEventListener("load", (e) => {
       setPreview(e.target.result);
