@@ -1,0 +1,21 @@
+.main {
+  width: 50%;
+  margin: auto;
+  height: 100vh;
+}
+.upload-section {
+  margin: 12px 0px;
+}
+
+.preview {
+  height: 60%;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+.title {
+  margin: 12px 0px;
+}
