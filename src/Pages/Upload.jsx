@@ -12,13 +12,28 @@ const Upload = () => {
     video: null,
     title: "",
   });
+  const [Progress, setProgress] = useState({
+    uploaded: 0,
+    finished: false,
+  });
+  const [isUploading, setIsUploading] = useState(false);
   const [Preview, setPreview] = useState("");
   const showProgress = (e) => {
-    console.log(e.total);
-    console.log(e.loaded);
+    setProgress(() => {
+      return {
+        finished: false,
+        uploaded: Math.round((e.loaded / e.total) * 100),
+      };
+    });
   };
   const handleFinish = () => {
-    console.log("Upload Finish");
+    setProgress(() => {
+      return {
+        uploaded: 0,
+        finished: true,
+      };
+    });
+    setIsUploading(false);
   };
   const UploadVideo = CatchErr(async (body) => {
     return new Promise((resolve, reject) => {
@@ -39,6 +54,7 @@ const Upload = () => {
       ajax.open("POST", url);
       ajax.setRequestHeader("token", `${localStorage.getItem("token")}`);
       ajax.send(fd);
+      setIsUploading(true);
     });
   });
   const handleUpload = async () => {
@@ -53,19 +69,26 @@ const Upload = () => {
         title: file?.name,
       };
     });
-    const reader = new FileReader();
-    reader.addEventListener("load", (e) => {
-      setPreview(e.target.result);
-    });
-    reader.addEventListener("error", () => {
-      throw new Error("Error In Loading Video");
-    });
-    reader.readAsDataURL(file);
+    const blob = URL.createObjectURL(file);
+    setPreview(blob);
   });
 
   return (
     <div className={style["main"]}>
       <div className={style["upload-section"]}>
+        {Preview && (
+          <FaUpload
+            style={{
+              cursor: "pointer",
+              display: "block",
+              width: "44px",
+              height: "44px",
+            }}
+            onClick={() => {
+              mediaRef?.current?.click();
+            }}
+          />
+        )}
         <input
           type="file"
           style={{ display: "none" }}
@@ -113,6 +136,9 @@ const Upload = () => {
             });
           }}
         />
+      </div>
+      <div className={style["progress"]}>
+        {isUploading && `${Progress.uploaded}`}
       </div>
       <Button onClick={handleUpload}>Upload</Button>
     </div>

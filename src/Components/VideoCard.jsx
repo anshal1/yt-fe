@@ -8,32 +8,50 @@ const VideoCard = ({ video }) => {
   const navigate = useNavigate();
   const videoRef = useRef();
   const [Duration, setDuration] = useState(0); // mins
+  const [isProcessing, setisProcessing] = useState(false);
   useEffect(() => {
     if (!video?.video?.["640x360"]) return;
     const handleSetDuration = (e) => {
       setDuration(Number(e.target.duration / 60).toFixed(2));
     };
+    const handleProcessing = () => {
+      setisProcessing(true);
+    };
     videoRef?.current?.addEventListener("loadedmetadata", handleSetDuration);
+    videoRef?.current?.addEventListener("error", handleProcessing);
+
     return () => {
       videoRef?.current?.removeEventListener(
         "loadedmetadata",
         handleSetDuration
       );
+      videoRef?.current?.removeEventListener("error", handleProcessing);
     };
   }, [videoRef, video]);
   return (
     <div
       className={style["vid-card"]}
       onClick={() => {
+        if (isProcessing) {
+          alert("Video Is Under Processing");
+          return;
+        }
         navigate(`/video/${video?.slug}`);
       }}
     >
-      <video
-        src={video?.video?.["640x360"]}
-        className={style["video-thumbnail"]}
-        width={400}
-        ref={videoRef}
-      ></video>
+      {isProcessing ? (
+        <div className={style["processing"]}>
+          <p>Video is under processing, Please check again in few minutes</p>
+        </div>
+      ) : (
+        <video
+          src={video?.video?.["640x360"]}
+          className={style["video-thumbnail"]}
+          width={400}
+          ref={videoRef}
+        ></video>
+      )}
+
       <span className={style["duration"]}>{Duration} min</span>
       <div className={style["details-container"]}>
         <div className={style["vid-details"]}>
