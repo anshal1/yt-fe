@@ -7,6 +7,6 @@ export const CatchErr = (fn) => async (params) => {
     }
     return data;
   } catch (error) {
-    alert(error?.message);
+    alert(error?.message || error?.error);
   }
 };
