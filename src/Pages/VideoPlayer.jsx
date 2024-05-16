@@ -26,6 +26,7 @@ const VideoPlayer = () => {
   const [vidCurrentTIme, setvidCurrentTime] = useState(0);
   const [Width, setWidth] = useState(800);
   const [Height, setHeight] = useState(450);
+  const [isProcessing, setisProcessing] = useState(false);
 
   const toggleFullScreen = () => {
     if (!isFullScreen) {
@@ -80,6 +81,17 @@ const VideoPlayer = () => {
     };
   }, [Video]);
 
+  useEffect(() => {
+    const handleProcessing = () => {
+      setisProcessing(true);
+    };
+    vidRef?.current?.addEventListener("error", handleProcessing);
+    return () => {
+      setisProcessing(false);
+      vidRef?.current?.removeEventListener("error", handleProcessing);
+    };
+  }, [Video, Quality]);
+
   const handleSeek = (e) => {
     vidRef.current.currentTime = e.target.value;
     setvidCurrentTime(e.target.value);
@@ -107,13 +119,20 @@ const VideoPlayer = () => {
             </div>
           </div>
         )}
-        <video
-          src={Video?.video?.[Quality]}
-          width={Width}
-          height={Height}
-          ref={vidRef}
-          className={style["video"]}
-        ></video>
+        {isProcessing ? (
+          <div className={style["processing"]}>
+            <p>Video is under processing, Please check again in few minutes</p>
+          </div>
+        ) : (
+          <video
+            src={Video?.video?.[Quality]}
+            width={Width}
+            height={Height}
+            ref={vidRef}
+            className={style["video"]}
+          ></video>
+        )}
+
         {!isFullScreen && (
           <div className={style["details"]}>
             <div className={style["views"]}>

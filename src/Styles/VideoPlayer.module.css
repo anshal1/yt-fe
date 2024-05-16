@@ -48,3 +48,14 @@
   justify-content: center;
   column-gap: 6px;
 }
+.processing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.processing > p {
+  text-align: center;
+  font-weight: 500;
+}
