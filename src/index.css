@@ -21,6 +21,18 @@ li {
   animation: spinner 1s ease-in-out infinite;
 }
 
+a {
+  all: unset;
+  font-weight: 500;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 250ms;
+}
+a:hover,
+a:focus-within {
+  color: gray;
+}
+
 @keyframes spinner {
   100% {
     transform: rotate(360deg);
