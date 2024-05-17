@@ -22,3 +22,22 @@
 .title {
   margin: 12px 0px;
 }
+.progress {
+  background-color: rgb(211, 211, 211);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.bar {
+  width: var(--width);
+  height: 10px;
+  background-color: rgb(61, 97, 255);
+}
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.message > p {
+  font-weight: 500;
+}

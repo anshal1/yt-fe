@@ -5,9 +5,11 @@ import { BASEURL } from "../utils/Constant";
 import style from "../Styles/Upload.module.css";
 import Input from "../Components/Input";
 import { FaUpload } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Upload = () => {
   const mediaRef = useRef();
+  const navigate = useNavigate();
   const [VideoData, setVideoData] = useState({
     video: null,
     title: "",
@@ -59,7 +61,10 @@ const Upload = () => {
   });
   const handleUpload = async () => {
     const data = await UploadVideo(VideoData);
-    console.log(data);
+    if (data?.message) {
+      alert(data?.message);
+      navigate("/");
+    }
   };
 
   const handlePreview = CatchErr((file) => {
@@ -137,9 +142,21 @@ const Upload = () => {
           }}
         />
       </div>
-      <div className={style["progress"]}>
-        {isUploading && `${Progress.uploaded}`}
-      </div>
+      {isUploading && (
+        <div className={style["progress"]}>
+          {Progress.uploaded === 100 ? (
+            <div className={style["message"]}>
+              <p>Video is now under processing</p>
+            </div>
+          ) : (
+            <div
+              className={style["bar"]}
+              style={{ "--width": `${Progress.uploaded}%` }}
+            ></div>
+          )}
+        </div>
+      )}
+
       <Button onClick={handleUpload}>Upload</Button>
     </div>
   );
