@@ -27,6 +27,7 @@ const VideoPlayer = () => {
   const [Width, setWidth] = useState(800);
   const [Height, setHeight] = useState(450);
   const [isProcessing, setisProcessing] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
 
   const toggleFullScreen = () => {
     if (!isFullScreen) {
@@ -124,13 +125,32 @@ const VideoPlayer = () => {
             <p>Video is under processing, Please check again in few minutes</p>
           </div>
         ) : (
-          <video
-            src={Video?.video?.[Quality]}
-            width={Width}
-            height={Height}
-            ref={vidRef}
-            className={style["video"]}
-          ></video>
+          <div className={style["vid"]}>
+            {isLoading && (
+              <div className={style["loader-container"]}>
+                <span className="loader"></span>
+              </div>
+            )}
+            <video
+              src={Video?.video?.[Quality]}
+              width={Width}
+              height={Height}
+              ref={vidRef}
+              className={style["video"]}
+              onLoadStart={() => {
+                setisLoading(true);
+              }}
+              onLoadedData={() => {
+                setisLoading(false);
+              }}
+              onWaiting={() => {
+                setisLoading(true);
+              }}
+              onCanPlay={() => {
+                setisLoading(false);
+              }}
+            ></video>
+          </div>
         )}
 
         {!isFullScreen && (
