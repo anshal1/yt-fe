@@ -64,8 +64,8 @@ const VideoPlayer = () => {
       setVideo(newUpdatedVid);
     };
     const updateProgress = async () => {
-      setvidCurrentTime(vidRef?.current?.currentTime);
-      setvidDuration(vidRef?.current?.duration);
+      setvidCurrentTime(Math.round(vidRef?.current?.currentTime));
+      setvidDuration(Math.round(vidRef?.current?.duration));
       const passedTimeInPercent =
         (vidRef?.current?.currentTime / vidRef?.current?.duration) * 100;
       if (passedTimeInPercent >= 25) {
