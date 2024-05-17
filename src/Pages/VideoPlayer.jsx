@@ -56,11 +56,11 @@ const VideoPlayer = () => {
       if (!hasWatched) {
         return;
       }
-      const newUpdatedVid = await UpdateViews(Video?._id);
       localStorage.setItem(
         "watched",
         JSON.stringify({ timestamp: new Date(), video: Video?._id })
       );
+      const newUpdatedVid = await UpdateViews(Video?._id);
       setVideo(newUpdatedVid);
     };
     const updateProgress = async () => {
