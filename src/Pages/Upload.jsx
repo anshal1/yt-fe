@@ -6,6 +6,7 @@ import style from "../Styles/Upload.module.css";
 import Input from "../Components/Input";
 import { FaUpload } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Upload = () => {
   const mediaRef = useRef();
@@ -62,7 +63,7 @@ const Upload = () => {
   const handleUpload = async () => {
     const data = await UploadVideo(VideoData);
     if (data?.message) {
-      alert(data?.message);
+      toast.success(data?.message);
       navigate("/");
     }
   };
