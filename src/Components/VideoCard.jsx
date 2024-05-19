@@ -7,7 +7,7 @@ import { FaTrash } from "react-icons/fa";
 import { useContext } from "react";
 import { UserContext } from "../Context";
 
-const VideoCard = ({ video }) => {
+const VideoCard = ({ video, handleDelete }) => {
   const { User } = useContext(UserContext);
   const navigate = useNavigate();
   const videoRef = useRef();
@@ -49,7 +49,7 @@ const VideoCard = ({ video }) => {
             color="red"
             onClick={(e) => {
               e.stopPropagation();
-              console.log("Delete");
+              handleDelete(video?._id);
             }}
           />
         </div>
