@@ -3,8 +3,12 @@ import style from "../Styles/VideoCard.module.css";
 import { FormatDate, FormatNumber } from "../utils/FormatDate";
 import { useNavigate } from "react-router-dom";
 import { truncateString } from "../utils/helperfunction";
+import { FaTrash } from "react-icons/fa";
+import { useContext } from "react";
+import { UserContext } from "../Context";
 
 const VideoCard = ({ video }) => {
+  const { User } = useContext(UserContext);
   const navigate = useNavigate();
   const videoRef = useRef();
   const [Duration, setDuration] = useState(0); // mins
@@ -39,6 +43,18 @@ const VideoCard = ({ video }) => {
         navigate(`/video/${video?.slug}`);
       }}
     >
+      {User?._id === video?.user?._id && (
+        <div className={style["delete-button"]}>
+          <FaTrash
+            color="red"
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log("Delete");
+            }}
+          />
+        </div>
+      )}
+
       {isProcessing ? (
         <div className={style["processing"]}>
           <p>Video is under processing, Please check again in few minutes</p>

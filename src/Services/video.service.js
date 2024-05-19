@@ -37,4 +37,17 @@ const UpdateViews = CatchErr(async (id) => {
   return res;
 });
 
-export { getAllVideo, getSingleVideo, UpdateViews };
+const DeleteVideo = CatchErr(async (id) => {
+  const url = `${BASEURL}/video/${id}`;
+  const data = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json",
+      token: localStorage.getItem("token"),
+    },
+  });
+  const res = await data.json();
+  return res;
+});
+
+export { getAllVideo, getSingleVideo, UpdateViews, DeleteVideo };
