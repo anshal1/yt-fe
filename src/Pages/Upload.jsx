@@ -46,6 +46,12 @@ const Upload = () => {
       fd.append("video", body?.video);
       const ajax = new XMLHttpRequest();
       ajax.upload.addEventListener("progress", showProgress, false);
+      ajax.upload.addEventListener("abort", () => {
+        toast.info("Upload Aborted");
+      });
+      ajax.upload.addEventListener("error", () => {
+        toast.error("Unable To Upload The Video");
+      });
       ajax.addEventListener("load", () => {
         const response = JSON.parse(ajax.responseText);
         if (response?.error) {
