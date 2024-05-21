@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { UpdateViews, getSingleVideo } from "../Services/video.service";
 import { useParams } from "react-router-dom";
 import Select from "../Components/Select";
@@ -15,8 +15,10 @@ import {
   FaVolumeXmark,
 } from "react-icons/fa6";
 import { FormatNumber } from "../utils/FormatDate";
+import { UserContext } from "../Context";
 
 const VideoPlayer = () => {
+  const { setIsFullScreen: ctxFullScreen } = useContext(UserContext);
   const { slug } = useParams();
   const [Video, setVideo] = useState({});
   const [Quality, setQuality] = useState("640x360");
@@ -32,9 +34,11 @@ const VideoPlayer = () => {
   const toggleFullScreen = () => {
     if (!isFullScreen) {
       setIsFullScreen(true);
+      ctxFullScreen(true);
       setWidth(window.innerWidth);
       setHeight(window.innerHeight);
     } else {
+      ctxFullScreen(false);
       setIsFullScreen(false);
       setWidth(800);
       setHeight(450);

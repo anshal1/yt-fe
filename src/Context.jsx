@@ -7,6 +7,7 @@ export const UserContext = createContext();
 
 const Context = ({ children }) => {
   const [User, setUser] = useState(null);
+  const [IsFullScreen, setIsFullScreen] = useState(false);
   useEffect(() => {
     (async () => {
       const user = await getUser();
@@ -16,7 +17,9 @@ const Context = ({ children }) => {
     })();
   }, []);
   return (
-    <UserContext.Provider value={{ User }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ User, IsFullScreen, setIsFullScreen }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 

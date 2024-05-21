@@ -38,13 +38,13 @@ const Upload = () => {
     });
     setIsUploading(false);
   };
+  const ajax = new XMLHttpRequest();
   const UploadVideo = CatchErr(async (body) => {
     return new Promise((resolve, reject) => {
       const url = `${BASEURL}/video`;
       const fd = new FormData();
       fd.append("title", body?.title);
       fd.append("video", body?.video);
-      const ajax = new XMLHttpRequest();
       ajax.upload.addEventListener("progress", showProgress, false);
       ajax.upload.addEventListener("abort", () => {
         toast.info("Upload Aborted");
@@ -72,6 +72,10 @@ const Upload = () => {
       toast.success(data?.message);
       navigate("/");
     }
+  };
+
+  const handleCancel = () => {
+    ajax.abort();
   };
 
   const handlePreview = CatchErr((file) => {
@@ -161,6 +165,7 @@ const Upload = () => {
               style={{ "--width": `${Progress.uploaded}%` }}
             ></div>
           )}
+          <Button onClick={handleCancel}>Cancel</Button>
         </div>
       )}
 

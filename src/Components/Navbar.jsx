@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "../Styles/Navbar.module.css";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import { UserContext } from "../Context";
 const Navbar = () => {
+  const { IsFullScreen } = useContext(UserContext);
+  if (IsFullScreen) {
+    return;
+  }
   return (
     <nav className={style["navbar"]}>
       <div className={style["title"]}>
