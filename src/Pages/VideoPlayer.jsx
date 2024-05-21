@@ -30,14 +30,20 @@ const VideoPlayer = () => {
   const [Height, setHeight] = useState(450);
   const [isProcessing, setisProcessing] = useState(false);
   const [isLoading, setisLoading] = useState(true);
+  const [HideControlles, setHideControlles] = useState(true);
+  let timer = null;
 
   const toggleFullScreen = () => {
     if (!isFullScreen) {
+      clearTimeout(timer);
       setIsFullScreen(true);
       ctxFullScreen(true);
+      setHideControlles(false);
       setWidth(window.innerWidth);
       setHeight(window.innerHeight);
     } else {
+      setHideControlles(true);
+      clearTimeout(timer);
       ctxFullScreen(false);
       setIsFullScreen(false);
       setWidth(800);
@@ -101,6 +107,25 @@ const VideoPlayer = () => {
     vidRef.current.currentTime = e.target.value;
     setvidCurrentTime(e.target.value);
   };
+
+  useEffect(() => {
+    if (!isFullScreen) {
+      setHideControlles(true);
+      return;
+    }
+    const handleShowControlsInFullScreen = () => {
+      setHideControlles(true);
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        setHideControlles(false);
+      }, 3000);
+    };
+    handleShowControlsInFullScreen();
+    window.addEventListener("mousemove", handleShowControlsInFullScreen);
+    return () => {
+      window.removeEventListener("mousemove", handleShowControlsInFullScreen);
+    };
+  }, [isFullScreen]);
 
   const vidRef = useRef();
   useEffect(() => {
@@ -167,64 +192,66 @@ const VideoPlayer = () => {
             </div>
           </div>
         )}
-        <div className={style["buttons"]}>
-          <div className={style["action-btn"]}>
-            <button
-              onClick={() => {
-                if (vidRef?.current?.paused) {
-                  vidRef?.current?.play();
-                  setisPlaying(true);
-                } else {
-                  vidRef?.current?.pause();
-                  setisPlaying(false);
-                }
-              }}
-            >
-              {!isPlaying ? (
-                <FaPlay style={{ width: "24px", height: "24px" }} />
-              ) : (
-                <FaPause style={{ width: "24px", height: "24px" }} />
-              )}
-            </button>
-            <button onClick={toggleFullScreen}>
-              {isFullScreen ? (
-                <FaCompress style={{ width: "24px", height: "24px" }} />
-              ) : (
-                <FaExpand style={{ width: "24px", height: "24px" }} />
-              )}
-            </button>
-            <button
-              onClick={() => {
-                vidRef.current.muted = !vidRef?.current?.muted;
-              }}
-            >
-              {vidRef?.current?.muted ? (
-                <FaVolumeXmark style={{ width: "24px", height: "24px" }} />
-              ) : (
-                <FaVolumeHigh style={{ width: "24px", height: "24px" }} />
-              )}
-              {/* Mute */}
-            </button>
-          </div>
-          <input
-            type="range"
-            min={0}
-            max={vidDuration}
-            value={vidCurrentTIme}
-            onChange={handleSeek}
-            className={style["vid-progress"]}
-          />
-          <div style={{ width: "5rem" }}>
-            <Select
-              value={Quality}
-              options={options}
-              onChange={(val) => {
-                setQuality(val);
-              }}
-              placeholder={"Quality"}
+        {HideControlles && (
+          <div className={style["buttons"]}>
+            <div className={style["action-btn"]}>
+              <button
+                onClick={() => {
+                  if (vidRef?.current?.paused) {
+                    vidRef?.current?.play();
+                    setisPlaying(true);
+                  } else {
+                    vidRef?.current?.pause();
+                    setisPlaying(false);
+                  }
+                }}
+              >
+                {!isPlaying ? (
+                  <FaPlay style={{ width: "24px", height: "24px" }} />
+                ) : (
+                  <FaPause style={{ width: "24px", height: "24px" }} />
+                )}
+              </button>
+              <button onClick={toggleFullScreen}>
+                {isFullScreen ? (
+                  <FaCompress style={{ width: "24px", height: "24px" }} />
+                ) : (
+                  <FaExpand style={{ width: "24px", height: "24px" }} />
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  vidRef.current.muted = !vidRef?.current?.muted;
+                }}
+              >
+                {vidRef?.current?.muted ? (
+                  <FaVolumeXmark style={{ width: "24px", height: "24px" }} />
+                ) : (
+                  <FaVolumeHigh style={{ width: "24px", height: "24px" }} />
+                )}
+                {/* Mute */}
+              </button>
+            </div>
+            <input
+              type="range"
+              min={0}
+              max={vidDuration}
+              value={vidCurrentTIme}
+              onChange={handleSeek}
+              className={style["vid-progress"]}
             />
+            <div style={{ width: "5rem" }}>
+              <Select
+                value={Quality}
+                options={options}
+                onChange={(val) => {
+                  setQuality(val);
+                }}
+                placeholder={"Quality"}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   );
