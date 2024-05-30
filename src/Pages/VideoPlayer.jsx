@@ -161,7 +161,11 @@ const VideoPlayer = () => {
               </div>
             )}
             <video
-              src={Video?.video?.[Quality]}
+              src={
+                Video?.sharedUrl?.[Quality]
+                  ? Video?.sharedUrl?.[Quality]
+                  : Video?.video?.[Quality]
+              }
               width={Width}
               height={Height}
               ref={vidRef}

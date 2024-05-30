@@ -61,7 +61,11 @@ const VideoCard = ({ video, handleDelete }) => {
         </div>
       ) : (
         <video
-          src={video?.video?.["640x360"]}
+          src={
+            video?.sharedUrl?.["640x360"]
+              ? video?.sharedUrl?.["640x360"]
+              : video?.video?.["640x360"]
+          }
           className={style["video-thumbnail"]}
           width={400}
           ref={videoRef}
